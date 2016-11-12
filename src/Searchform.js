@@ -20,6 +20,7 @@ class Searchform extends Component {
     if (this.state.searchTerm === '') {
       this.setState({error: 'Please fill out the form.'});
     } else {
+      this.setState({error: ''});
       this.props.onSearchSubmit(this.state.searchTerm);
     }
     return false;
