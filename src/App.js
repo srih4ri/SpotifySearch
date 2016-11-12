@@ -29,12 +29,10 @@ class App extends Component {
   }
 
   onUpdateFilter(filter) {
-    console.log('Called updateFilterBy with',  filter);
     this.setState({filterBy: filter});
   }
 
   onUpdateSearchTerm(term) {
-    console.log('Called update search Term with', term);
     if (this.state.filterBy === '') {
       this.setState({apiError: 'Please choose a filter criteria'});
       return false;
@@ -56,7 +54,6 @@ class App extends Component {
       if (apiResponse.error !== undefined) {
         this.setState({searchResults: [], apiError: apiResponse.error.message});
       } else {
-        console.log(apiResponse);
         this.props.router.replace('/' + this.state.filterBy + '/' + this.state.searchTerm);
         this.setState({searchResults: this.parseResults(apiResponse), apiError: ''});
       }

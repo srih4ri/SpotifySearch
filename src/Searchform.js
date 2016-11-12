@@ -16,7 +16,6 @@ class Searchform extends Component {
   }
 
   onSearchSubmit(event) {
-    console.log('Submitted with ', this.state.searchTerm);
     if (this.state.searchTerm === '') {
       this.setState({error: 'Please fill out the form.'});
     } else {
