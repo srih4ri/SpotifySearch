@@ -12,8 +12,8 @@ class App extends Component {
     super(props);
     this.filterOptions = ['Album','Artist','Playlist','Track']
     this.state = {
-      searchTerm: 'sam',
-      filterBy: '',
+      searchTerm: 'Rage Against the Machine',
+      filterBy: 'Album',
       searchInProgress: '',
       searchResults: [],
       apiError: ''
@@ -67,8 +67,16 @@ class App extends Component {
   render() {
     return (
       <div>
-      <Navbar onUpdateFilter={this.onUpdateFilter} resultCount={this.resultCount()} filterOptions={this.filterOptions}/>
-      <Searchform searchTerm={this.state.searchTerm} onSearchSubmit={this.onUpdateSearchTerm} searchInProgress={this.state.searchInProgress} apiError={this.state.apiError}/>
+      <Navbar currentFilter={this.state.filterBy}
+      onUpdateFilter={this.onUpdateFilter}
+      resultCount={this.resultCount()}
+      filterOptions={this.filterOptions}  />
+
+      <Searchform searchTerm={this.state.searchTerm}
+      onSearchSubmit={this.onUpdateSearchTerm}
+      searchInProgress={this.state.searchInProgress}
+      apiError={this.state.apiError}/>
+
       <Searchresults searchResults={this.state.searchResults}/>
       </div>
     );
