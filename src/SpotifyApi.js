@@ -19,7 +19,6 @@ class SpotifyApi {
       .then(function(response) {
         return response.json()
       }).then(function(json) {
-        console.log("Calling callback for query", apiParams)
         successCallback(json);
       }).catch(function(ex) {
         console.log('API Request failed', ex)

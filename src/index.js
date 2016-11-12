@@ -7,8 +7,8 @@ import './index.css';
 
 ReactDOM.render(
   <Router history={hashHistory}>
-  <Route path="/(:filterBy/:searchTerm)" component={App}>
-  </Route>
+    <Route path="/(:filterBy/:searchTerm)" component={App}>
+    </Route>
   </Router>,
   document.getElementById('app')
 );

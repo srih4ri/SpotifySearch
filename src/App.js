@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Navbar from './Navbar.js';
 import Searchform from './Searchform.js';
 import Searchresults from './Searchresults.js';
-import './App.css';
 import SpotifyApi from './SpotifyApi.js';
 
 class App extends Component {
@@ -68,7 +67,7 @@ class App extends Component {
     return this.state.searchResults.length;
   }
 
-  
+
   render() {
     return (
       <div>
