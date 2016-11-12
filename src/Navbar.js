@@ -1,5 +1,33 @@
 import React, { Component } from 'react';
 
+class Filter extends Component {
+
+  constructor(props) {
+    super(props);
+    this.onFilterUpdate = this.onFilterUpdate.bind(this);
+  }
+
+  onFilterUpdate(event) {
+    this.props.onFilterClicked(event.target.text);
+  }
+
+  renderFilterOptions() {
+    return this.props.filterOptions.map(function(option){
+      return(<li key={option}><a href="#" onClick={this.onFilterUpdate}>{option}</a></li>)
+    }, this);
+  }
+
+  render() {
+    return(
+      <li className="dropdown active">
+      <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter <span className="caret"></span></a>
+      <ul className="dropdown-menu">
+      {this.renderFilterOptions()}
+      </ul>
+      </li>
+    );
+  }
+}
 class Navbar extends Component {
   render() {
     return (
@@ -19,18 +47,10 @@ class Navbar extends Component {
 
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul className="nav navbar-nav">
-      <li className="dropdown active">
-      <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter <span className="caret"></span></a>
-      <ul className="dropdown-menu">
-      <li><a href="#">Album</a></li>
-      <li><a href="#">Artist</a></li>
-      <li><a href="#">Playlist</a></li>
-      <li><a href="#">Track</a></li>
-      </ul>
-      </li>
+      <Filter filterOptions={this.props.filterOptions} onFilterClicked={this.props.onUpdateFilter}/>
       </ul>
       <ul className="nav navbar-nav navbar-right">
-      <li className="counter">Counter</li>
+      <li className="counter">{this.props.resultCount}</li>
       </ul>
       </div>
       </div>
