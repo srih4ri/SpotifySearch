@@ -5,7 +5,7 @@ class Searchform extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: this.props.searchTerm
+      searchTerm: this.props.searchTerm,
     };
     this.onSearchTermChange = this.onSearchTermChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
@@ -16,9 +16,9 @@ class Searchform extends Component {
   }
 
   onSearchSubmit(event) {
-    console.log("Submitted with ", this.state.searchTerm)
-    if(this.state.searchTerm === ''){
-      this.setState({error: 'Please fill out the form.'})
+    console.log('Submitted with ', this.state.searchTerm);
+    if (this.state.searchTerm === '') {
+      this.setState({error: 'Please fill out the form.'});
     } else {
       this.props.onSearchSubmit(this.state.searchTerm);
     }
@@ -27,7 +27,7 @@ class Searchform extends Component {
   }
 
   renderErrors() {
-    return(
+    return (
       <p className="error">
         <span>{this.props.apiError}</span>
         <span>{this.state.error}</span>
@@ -36,7 +36,7 @@ class Searchform extends Component {
   }
 
   render() {
-    return(
+    return (
       <div className="container">
         <form className="form-horizontal" onSubmit={this.onSearchSubmit}>
           <div className="form-group form-group-lg">

@@ -12,13 +12,13 @@ class Filter extends Component {
   }
 
   renderFilterOptions() {
-    return this.props.filterOptions.map(function(option){
-      return(<li key={option}><a href="#" onClick={this.onFilterUpdate}>{option}</a></li>)
+    return this.props.filterOptions.map(function(option) {
+      return (<li key={option}><a href="#" onClick={this.onFilterUpdate}>{option}</a></li>);
     }, this);
   }
 
   render() {
-    return(
+    return (
       <li className="dropdown active">
         <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           {this.props.currentFilter}
@@ -55,7 +55,7 @@ class Navbar extends Component {
           </div>
         </div>
       </nav>);
-    }
+  }
   }
 
-  export default Navbar;
+export default Navbar;

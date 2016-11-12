@@ -8,13 +8,13 @@ import SpotifyApi from './SpotifyApi.js';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.filterOptions = ['Album','Artist','Playlist','Track']
+    this.filterOptions = ['Album', 'Artist', 'Playlist', 'Track'];
     this.state = {
       searchTerm: 'Rage Against the Machine',
       filterBy: 'Album',
       searchInProgress: '',
       searchResults: [],
-      apiError: ''
+      apiError: '',
     };
 
     this.onUpdateFilter = this.onUpdateFilter.bind(this);
@@ -29,36 +29,36 @@ class App extends Component {
   }
 
   onUpdateFilter(filter) {
-    console.log("Called updateFilterBy with",  filter);
+    console.log('Called updateFilterBy with',  filter);
     this.setState({filterBy: filter});
   }
 
   onUpdateSearchTerm(term) {
-    console.log("Called update search Term with", term);
-    if(this.state.filterBy === ''){
+    console.log('Called update search Term with', term);
+    if (this.state.filterBy === '') {
       this.setState({apiError: 'Please choose a filter criteria'});
       return false;
     }
-    this.setState({searchTerm: term},function(){
+    this.setState({searchTerm: term}, function() {
       this.updateResults();
     });
   }
 
   parseResults(apiResponse) {
-    let apiResponseKey = this.state.filterBy.toLowerCase() + "s";
-    return(apiResponse[apiResponseKey].items);
+    let apiResponseKey = this.state.filterBy.toLowerCase() + 's';
+    return (apiResponse[apiResponseKey].items);
   }
 
   updateResults() {
     this.setState({searchInProgress: true});
-    this.spotify.search(this.state.filterBy, this.state.searchTerm, (function(apiResponse){
-      this.setState({searchInProgress: false})
-      if(apiResponse.error !== undefined){
+    this.spotify.search(this.state.filterBy, this.state.searchTerm, (function(apiResponse) {
+      this.setState({searchInProgress: false});
+      if (apiResponse.error !== undefined) {
         this.setState({searchResults: [], apiError: apiResponse.error.message});
       } else {
         console.log(apiResponse);
-        this.props.router.replace("/"+this.state.filterBy+"/" +this.state.searchTerm)
-        this.setState({searchResults: this.parseResults(apiResponse), apiError: ''})
+        this.props.router.replace('/' + this.state.filterBy + '/' + this.state.searchTerm);
+        this.setState({searchResults: this.parseResults(apiResponse), apiError: ''});
       }
     }).bind(this));
   }
