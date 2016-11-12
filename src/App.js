@@ -4,11 +4,8 @@ import React, { Component } from 'react';
 import Navbar from './Navbar.js';
 import Searchform from './Searchform.js';
 import Searchresults from './Searchresults.js';
-import sampleSearchResult from './sampleSearchResult.js';
 import './App.css';
 import SpotifyApi from './SpotifyApi.js';
-
-let searchResult = sampleSearchResult();
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +15,8 @@ class App extends Component {
       searchTerm: 'sam',
       filterBy: '',
       searchInProgress: '',
-      searchResults: searchResult['artists']['items']
+      searchResults: [],
+      apiError: ''
     };
 
     this.onUpdateFilter = this.onUpdateFilter.bind(this);
@@ -29,20 +27,35 @@ class App extends Component {
   onUpdateFilter(filter) {
     console.log("Called updateFilterBy with",  filter);
     this.setState({filterBy: filter});
-    this.updateResults();
   }
 
-  onUpdateSearchTerm(searchTerm) {
-    console.log("Called update search Term with", searchTerm);
-    this.setState({searchTerm: searchTerm});
-    this.updateResults();
+  onUpdateSearchTerm(term) {
+    console.log("Called update search Term with", term);
+    if(this.state.filterBy === ''){
+      this.setState({apiError: 'Please choose a filter criteria'});
+      return false;
+    }
+    this.setState({searchTerm: term},function(){
+      this.updateResults();
+    });
+  }
+
+  parseResults(apiResponse) {
+    let apiResponseKey = this.state.filterBy.toLowerCase() + "s";
+    return(apiResponse[apiResponseKey].items);
   }
 
   updateResults() {
     this.setState({searchInProgress: true});
+    console.log("State before calling api",this.state);
     this.spotify.search(this.state.filterBy, this.state.searchTerm, (function(apiResponse){
       this.setState({searchInProgress: false})
-      console.log(apiResponse)
+      if(apiResponse.error !== undefined){
+        this.setState({searchResults: [], apiError: apiResponse.error.message});
+      } else {
+        console.log(apiResponse);
+        this.setState({searchResults: this.parseResults(apiResponse), apiError: ''})
+      }
     }).bind(this));
   }
 
@@ -55,7 +68,7 @@ class App extends Component {
     return (
       <div>
       <Navbar onUpdateFilter={this.onUpdateFilter} resultCount={this.resultCount()} filterOptions={this.filterOptions}/>
-      <Searchform searchTerm={this.state.searchTerm} onSearchSubmit={this.onUpdateSearchTerm} searchInProgress={this.state.searchInProgress}/>
+      <Searchform searchTerm={this.state.searchTerm} onSearchSubmit={this.onUpdateSearchTerm} searchInProgress={this.state.searchInProgress} apiError={this.state.apiError}/>
       <Searchresults searchResults={this.state.searchResults}/>
       </div>
     );

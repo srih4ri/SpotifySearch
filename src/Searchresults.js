@@ -1,27 +1,40 @@
 import React, { Component } from 'react';
+import _ from 'underscore';
 
 const SearchResult = ({albumArtUrl, name}) => {
   return(
     <li>
-    <div className="col-sm-3 col-md-2">
-    <div className='thumbnail'>
     <img role='presentation' className='thumb' src={albumArtUrl}/>
-    </div>
     <span>{name}</span>
-    </div>
     </li>
   );
 }
 
 class Searchresults extends Component {
 
+  parseAlbumArt(searchResult){
+    let images = [];
+    if (searchResult.album !== undefined){
+      images = searchResult.album.images;
+    }
+    if (searchResult.images !== undefined){
+      images = searchResult.images;
+    }
+    const albumArt = _.find(images,function(image) {
+      return (image.width && image.width < 65);
+    }) || {};
+    return albumArt.url;
+  }
+
   renderSearchResults() {
     return (
       this.props.searchResults.map(function(searchResult){
-        return (<SearchResult name={searchResult.name} albumArtUrl={(searchResult.images[0]||{}).url} key={searchResult.id}/>);
-      })
+        let albumArt = this.parseAlbumArt(searchResult);
+        return (<SearchResult name={searchResult.name} albumArtUrl={albumArt} key={searchResult.id}/>);
+      }, this)
     );
   }
+
   render() {
     return(
       <div className="container">
