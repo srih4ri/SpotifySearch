@@ -39,13 +39,9 @@ class Navbar extends Component {
 
       <div className="container">
       <div className="navbar-header">
-      <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-      <span className="sr-only">Toggle navigation</span>
-      <span className="icon-bar"></span>
-      <span className="icon-bar"></span>
-      <span className="icon-bar"></span>
-      </button>
-      <div className="navbar-brand" href="#"><i className="fa fa-rebel" aria-hidden="true"></i></div>
+      <div className="navbar-brand">
+      <i className="fa fa-rebel" aria-hidden="true"></i>
+      </div>
       </div>
 
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 
 import Navbar from './Navbar.js';
@@ -24,6 +23,12 @@ class App extends Component {
     this.spotify = new SpotifyApi();
   }
 
+  componentWillMount() {
+    const filterBy = this.props.params.filterBy || 'Album';
+    const searchTerm = this.props.params.searchTerm;
+    this.setState({filterBy: filterBy, searchTerm: searchTerm});
+  }
+
   onUpdateFilter(filter) {
     console.log("Called updateFilterBy with",  filter);
     this.setState({filterBy: filter});
@@ -47,13 +52,13 @@ class App extends Component {
 
   updateResults() {
     this.setState({searchInProgress: true});
-    console.log("State before calling api",this.state);
     this.spotify.search(this.state.filterBy, this.state.searchTerm, (function(apiResponse){
       this.setState({searchInProgress: false})
       if(apiResponse.error !== undefined){
         this.setState({searchResults: [], apiError: apiResponse.error.message});
       } else {
         console.log(apiResponse);
+        this.props.router.replace("/"+this.state.filterBy+"/" +this.state.searchTerm)
         this.setState({searchResults: this.parseResults(apiResponse), apiError: ''})
       }
     }).bind(this));
