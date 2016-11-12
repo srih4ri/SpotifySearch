@@ -16,12 +16,12 @@ class Searchform extends Component {
   }
 
   onSearchSubmit(event) {
+    event.preventDefault();
     if (this.state.searchTerm === '') {
       this.setState({error: 'Please fill out the form.'});
     } else {
       this.props.onSearchSubmit(this.state.searchTerm);
     }
-    event.preventDefault();
     return false;
   }
 
@@ -52,5 +52,13 @@ class Searchform extends Component {
     );
   }
 }
+
+Searchform.propTypes = {
+  searchTerm: React.PropTypes.string,
+  apiError: React.PropTypes.string,
+  error: React.PropTypes.string,
+  searchInProgress: React.PropTypes.bool,
+  onSearchSubmit: React.PropTypes.func,
+};
 
 export default Searchform;

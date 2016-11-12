@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       searchTerm: 'Rage Against the Machine',
       filterBy: 'Album',
-      searchInProgress: '',
+      searchInProgress: false,
       searchResults: [],
       apiError: '',
     };
@@ -26,6 +26,16 @@ class App extends Component {
     const filterBy = this.props.params.filterBy || 'Album';
     const searchTerm = this.props.params.searchTerm;
     this.setState({filterBy: filterBy, searchTerm: searchTerm});
+  }
+
+  isSearchParamsPresent() {
+    return(this.state.filterBy !== undefined && this.state.searchTerm !== undefined);
+  }
+
+  componentDidMount() {
+    if(this.isSearchParamsPresent()){
+      this.updateResults();
+    }
   }
 
   onUpdateFilter(filter) {

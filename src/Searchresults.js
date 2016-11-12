@@ -12,6 +12,12 @@ const SearchResult = ({albumArtUrl, name, spotifyUrl}) => {
   );
 };
 
+SearchResult.propTypes = {
+  albumArtUrl: React.PropTypes.string,
+  name: React.PropTypes.string,
+  spotifyUrl: React.PropTypes.string,
+};
+
 class Searchresults extends Component {
 
   parseAlbumArt(searchResult) {
@@ -22,7 +28,7 @@ class Searchresults extends Component {
     if (searchResult.images !== undefined) {
       images = searchResult.images;
     }
-    const albumArt = _.find(images, function(image) {
+    const albumArt = _.find(images, function filterImage(image) {
       return (image.width && image.width < 65);
     }) || {};
     return albumArt.url;
@@ -30,7 +36,7 @@ class Searchresults extends Component {
 
   renderSearchResults() {
     return (
-      this.props.searchResults.map(function(searchResult) {
+      this.props.searchResults.map(function mapResults(searchResult) {
         let albumArt = this.parseAlbumArt(searchResult);
         return (
           <SearchResult name={searchResult.name}
@@ -53,5 +59,9 @@ class Searchresults extends Component {
     );
   }
 }
+
+Searchresults.propTypes = {
+  searchResults: React.PropTypes.array,
+};
 
 export default Searchresults;

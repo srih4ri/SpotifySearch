@@ -12,7 +12,7 @@ class Filter extends Component {
   }
 
   renderFilterOptions() {
-    return this.props.filterOptions.map(function(option) {
+    return this.props.filterOptions.map(function mapFilters(option) {
       return (<li key={option}><a href="#" onClick={this.onFilterUpdate}>{option}</a></li>);
     }, this);
   }
@@ -31,6 +31,13 @@ class Filter extends Component {
     );
   }
 }
+
+Filter.propTypes = {
+  onFilterClicked: React.PropTypes.func,
+  currentFilter: React.PropTypes.string,
+  filterOptions: React.PropTypes.array,
+};
+
 class Navbar extends Component {
   render() {
     return (
@@ -57,5 +64,12 @@ class Navbar extends Component {
       </nav>);
   }
   }
+
+Navbar.propTypes = {
+  filterOptions: React.PropTypes.array,
+  onUpdateFilter: React.PropTypes.func,
+  currentFilter: React.PropTypes.string,
+  resultCount: React.PropTypes.number,
+};
 
 export default Navbar;
